@@ -28,4 +28,29 @@ public class AnimalController {
                 ""
         );
     }
+
+    @GetMapping("/{id}")
+    public Animal get(@PathVariable("id") String id) {
+        return new Animal(
+                id,
+                "cat",
+                "",
+                "",
+                ""
+        );
+    }
+
+    @PutMapping("/{id}")
+    public Animal update(@PathVariable("id") String id, @RequestBody UpdateAnimal updateAnimal) {
+        return new Animal(
+                id,
+                "dog",
+                "Canis lupus familiaris",
+                "",
+                ""
+        );
+    }
+
+    @DeleteMapping("/id")
+    public void deleteAnimal() {}
 }

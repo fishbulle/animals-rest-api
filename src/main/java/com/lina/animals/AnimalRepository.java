@@ -1,7 +1,6 @@
 package com.lina.animals;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -14,5 +13,22 @@ public class AnimalRepository {
                 new AnimalEntity(UUID.randomUUID().toString(), "cat", "felis catus", "", ""),
                 new AnimalEntity(UUID.randomUUID().toString(), "dog", "canis lupus familiaris", "", "")
         );
+    }
+
+    public AnimalEntity save(AnimalEntity animalEntity) {
+        return animalEntity;
+    }
+
+    public AnimalEntity get(String id) {
+        return new AnimalEntity(
+                id,
+                "Zebra",
+                "X",
+                "",
+                ""
+        );
+    }
+
+    public void delete(AnimalEntity animalEntity) {
     }
 }

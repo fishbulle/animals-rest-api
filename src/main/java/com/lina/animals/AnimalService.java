@@ -2,9 +2,7 @@ package com.lina.animals;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -18,36 +16,30 @@ public class AnimalService {
         return animalRepository.all();
     }
 
-    public AnimalEntity createAnimal(String id, String name, String binomialName) {
-        return new AnimalEntity(
+    public AnimalEntity createAnimal(String name, String binomialName) {
+        AnimalEntity animalEntity = new AnimalEntity(
                 UUID.randomUUID().toString(),
                 name,
                 binomialName,
                 "",
                 ""
         );
+        return animalRepository.save(animalEntity);
     }
 
-    public AnimalEntity get(String id) {
-        return new AnimalEntity(
-                id,
-                "cat",
-                "",
-                "",
-                ""
-        );
+    public AnimalEntity getAnimal(String id) {
+        return animalRepository.get(id);
     }
 
-    public AnimalEntity update(String id, String name, String binomialName) {
-        return new AnimalEntity(
-                id,
-                name,
-                binomialName,
-                "",
-                ""
-        );
+    public AnimalEntity updateAnimal(String id, String name, String binomialName) {
+        AnimalEntity animalEntity = animalRepository.get(id);
+        animalEntity.setName(name);
+        animalEntity.setBinomialName(binomialName);
+        return animalRepository.save(animalEntity);
     }
 
-    public void deleteAnimal() {}
-
+    public void deleteAnimal(String id) {
+        AnimalEntity animalEntity = animalRepository.get(id);
+        animalRepository.delete(animalEntity);
+    }
 }

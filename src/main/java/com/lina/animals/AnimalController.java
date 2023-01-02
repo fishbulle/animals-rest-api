@@ -22,10 +22,9 @@ public class AnimalController {
     }
 
     @PostMapping
-    public Animal createAnimal(@RequestBody CreateAnimal createAnimal) {
+    public Animal create(@RequestBody CreateAnimal createAnimal) {
         return toDTO(
                 animalService.createAnimal(
-                        UUID.randomUUID().toString(),
                         createAnimal.getName(),
                         createAnimal.getBinomialName()
                 ));
@@ -33,28 +32,22 @@ public class AnimalController {
 
     @GetMapping("/{id}")
     public Animal get(@PathVariable("id") String id) {
-        return new Animal(
-                id,
-                "cat",
-                "",
-                "",
-                ""
-        );
+        return toDTO(
+                animalService.getAnimal(id));
     }
 
     @PutMapping("/{id}")
     public Animal update(@PathVariable("id") String id, @RequestBody UpdateAnimal updateAnimal) {
-        return new Animal(
-                id,
-                "dog",
-                "Canis lupus familiaris",
-                "",
-                ""
-        );
+        return toDTO(
+                animalService.updateAnimal(
+                        id,
+                        updateAnimal.getName(),
+                        updateAnimal.getBinomialName()));
     }
 
-    @DeleteMapping("/id")
-    public void deleteAnimal() {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") String id) {
+        animalService.deleteAnimal(id);
     }
 
     private static Animal toDTO(AnimalEntity animalEntity) {

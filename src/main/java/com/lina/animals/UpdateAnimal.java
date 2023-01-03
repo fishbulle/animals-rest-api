@@ -7,4 +7,6 @@ public class UpdateAnimal {
 
     String name;
     String binomialName;
+    String description;
+    String conservationStatus;
 }

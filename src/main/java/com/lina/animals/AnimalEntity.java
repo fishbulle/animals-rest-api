@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-@Entity(name = "Animal")
+@Entity
 @Table(name = "Animals")
 @AllArgsConstructor
 @NoArgsConstructor

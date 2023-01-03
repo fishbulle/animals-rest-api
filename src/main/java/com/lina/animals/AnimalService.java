@@ -16,13 +16,16 @@ public class AnimalService {
         return animalRepository.all();
     }
 
-    public AnimalEntity createAnimal(String name, String binomialName) {
+    public AnimalEntity createAnimal(String name,
+                                     String binomialName,
+                                     String description,
+                                     String conservationStatus) {
         AnimalEntity animalEntity = new AnimalEntity(
                 UUID.randomUUID().toString(),
                 name,
                 binomialName,
-                "",
-                ""
+                description,
+                conservationStatus
         );
         return animalRepository.save(animalEntity);
     }
@@ -31,10 +34,16 @@ public class AnimalService {
         return animalRepository.get(id);
     }
 
-    public AnimalEntity updateAnimal(String id, String name, String binomialName) {
+    public AnimalEntity updateAnimal(String id,
+                                     String name,
+                                     String binomialName,
+                                     String description,
+                                     String conservationStatus) {
         AnimalEntity animalEntity = animalRepository.get(id);
         animalEntity.setName(name);
         animalEntity.setBinomialName(binomialName);
+        animalEntity.setDescription(description);
+        animalEntity.setConservationStatus(conservationStatus);
         return animalRepository.save(animalEntity);
     }
 

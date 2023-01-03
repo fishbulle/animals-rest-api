@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -26,7 +25,9 @@ public class AnimalController {
         return toDTO(
                 animalService.createAnimal(
                         createAnimal.getName(),
-                        createAnimal.getBinomialName()
+                        createAnimal.getBinomialName(),
+                        createAnimal.getDescription(),
+                        createAnimal.getConservationStatus()
                 ));
     }
 
@@ -37,12 +38,16 @@ public class AnimalController {
     }
 
     @PutMapping("/{id}")
-    public Animal update(@PathVariable("id") String id, @RequestBody UpdateAnimal updateAnimal) {
+    public Animal update(@PathVariable("id")
+                         String id,
+                         @RequestBody UpdateAnimal updateAnimal) {
         return toDTO(
                 animalService.updateAnimal(
                         id,
                         updateAnimal.getName(),
-                        updateAnimal.getBinomialName()));
+                        updateAnimal.getBinomialName(),
+                        updateAnimal.getDescription(),
+                        updateAnimal.getConservationStatus()));
     }
 
     @DeleteMapping("/{id}")

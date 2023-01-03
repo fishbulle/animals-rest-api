@@ -7,5 +7,7 @@ public class CreateAnimal {
 
     String name;
     String binomialName;
+    String description;
+    String conservationStatus;
 
 }

@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 public class AnimalService {
 
     AnimalRepository animalRepository;
+    JsonPlaceholderRemote jsonPlaceholderRemote;
 
     public Stream<AnimalEntity> all() {
         return animalRepository.all();
@@ -53,5 +54,13 @@ public class AnimalService {
         AnimalEntity animalEntity = animalRepository.get(id)
                 .orElseThrow(() -> new AnimalNotFoundException(id));
         animalRepository.delete(animalEntity);
+    }
+
+    public AnimalEntity link(String id, String remoteId) throws AnimalNotFoundException {
+        AnimalEntity animalEntity = animalRepository.get(id)
+                .orElseThrow(() -> new AnimalNotFoundException(id));
+        JsonPlaceholderRemote.JsonPlaceholder json = jsonPlaceholderRemote.get(remoteId);
+        animalEntity.setDescription(json.getBody());
+        return animalRepository.save(animalEntity);
     }
 }

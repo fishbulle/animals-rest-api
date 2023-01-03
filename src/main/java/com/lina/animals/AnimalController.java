@@ -41,6 +41,16 @@ public class AnimalController {
         }
     }
 
+    @GetMapping("/{id}/link/{remoteId}")
+    public ResponseEntity<Animal> get(@PathVariable("id") String id,
+                                      @PathVariable("remoteId") String remoteId) {
+        try {
+            return ResponseEntity.ok(toDTO(animalService.link(id, remoteId)));
+        } catch (AnimalNotFoundException e) {
+            return ResponseEntity.notFound().build();  // HTTP response 404 not found
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Animal> update(@PathVariable("id")
                                          String id,

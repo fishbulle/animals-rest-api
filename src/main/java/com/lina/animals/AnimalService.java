@@ -30,16 +30,18 @@ public class AnimalService {
         return animalRepository.save(animalEntity);
     }
 
-    public AnimalEntity getAnimal(String id) {
-        return animalRepository.get(id);
+    public AnimalEntity getAnimal(String id) throws AnimalNotFoundException {
+        return animalRepository.get(id)
+                .orElseThrow(() -> new AnimalNotFoundException(id));
     }
 
     public AnimalEntity updateAnimal(String id,
                                      String name,
                                      String binomialName,
                                      String description,
-                                     String conservationStatus) {
-        AnimalEntity animalEntity = animalRepository.get(id);
+                                     String conservationStatus) throws AnimalNotFoundException {
+        AnimalEntity animalEntity = animalRepository.get(id)
+                .orElseThrow(() -> new AnimalNotFoundException(id));
         animalEntity.setName(name);
         animalEntity.setBinomialName(binomialName);
         animalEntity.setDescription(description);
@@ -47,8 +49,9 @@ public class AnimalService {
         return animalRepository.save(animalEntity);
     }
 
-    public void deleteAnimal(String id) {
-        AnimalEntity animalEntity = animalRepository.get(id);
+    public void deleteAnimal(String id) throws AnimalNotFoundException {
+        AnimalEntity animalEntity = animalRepository.get(id)
+                .orElseThrow(() -> new AnimalNotFoundException(id));
         animalRepository.delete(animalEntity);
     }
 }

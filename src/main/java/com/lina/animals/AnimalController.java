@@ -1,6 +1,7 @@
 package com.lina.animals;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,27 +33,39 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public Animal get(@PathVariable("id") String id) {
-        return toDTO(
-                animalService.getAnimal(id));
+    public ResponseEntity<Animal> get(@PathVariable("id") String id) {
+        try {
+            return ResponseEntity.ok(toDTO(animalService.getAnimal(id)));
+        } catch (AnimalNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public Animal update(@PathVariable("id")
-                         String id,
-                         @RequestBody UpdateAnimal updateAnimal) {
-        return toDTO(
-                animalService.updateAnimal(
-                        id,
-                        updateAnimal.getName(),
-                        updateAnimal.getBinomialName(),
-                        updateAnimal.getDescription(),
-                        updateAnimal.getConservationStatus()));
+    public ResponseEntity<Animal> update(@PathVariable("id")
+                                         String id,
+                                         @RequestBody UpdateAnimal updateAnimal) {
+        try {
+            return ResponseEntity.ok(toDTO(
+                    animalService.updateAnimal(
+                            id,
+                            updateAnimal.getName(),
+                            updateAnimal.getBinomialName(),
+                            updateAnimal.getDescription(),
+                            updateAnimal.getConservationStatus())));
+        } catch (AnimalNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id) {
-        animalService.deleteAnimal(id);
+    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+        try {
+            animalService.deleteAnimal(id);
+            return ResponseEntity.ok().build();
+        } catch (AnimalNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     private static Animal toDTO(AnimalEntity animalEntity) {

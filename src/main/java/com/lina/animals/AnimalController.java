@@ -37,7 +37,7 @@ public class AnimalController {
         try {
             return ResponseEntity.ok(toDTO(animalService.getAnimal(id)));
         } catch (AnimalNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();  // HTTP response 404 not found
         }
     }
 
